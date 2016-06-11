@@ -23,7 +23,7 @@ public class OfferHandler extends TextWebSocketHandler {
         if (session != null && session.isOpen()) {
             try {
                 System.out.println("Now sending:" + objectMapper.writeValueAsString(offer));
-                session.sendMessage(new TextMessage("{\"value\": \"" + objectMapper.writeValueAsString(offer) + "\"}"));
+                session.sendMessage(new TextMessage("{\"value\": " + objectMapper.writeValueAsString(offer) + "}"));
             } catch (Exception e) {
                 e.printStackTrace();
             }

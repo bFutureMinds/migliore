@@ -2,7 +2,7 @@ package hello.services;
 
 import hello.OfferHandler;
 import hello.models.CustomerTransaction;
-import hello.models.Offer;
+import hello.models.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import hello.rulesProcessor.models.RulesAdapter;
@@ -33,7 +33,9 @@ public class RulesProcessorService {
         }
         Transaction currentTransaction = new Transaction(time,
                 transaction.getVendorType(), transaction.getAmount());
-        Offer offer = new Offer(rulesAdapter.getOffers(currentTransaction));
-        offerHandler.pushOfferCallback(offer);
+        List<Notification> notifications = rulesAdapter.getNotifications(currentTransaction);
+        for (Notification notification: notifications) {
+            offerHandler.pushOfferCallback(notification);
+        }
     }
 }

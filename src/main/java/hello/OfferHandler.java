@@ -2,7 +2,7 @@ package hello;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hello.models.Offer;
+import hello.models.Notification;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -17,19 +17,19 @@ public class OfferHandler extends TextWebSocketHandler {
     WebSocketSession session;
 
     // This will send only to one client(most recently connected)
-    public void pushOfferCallback(Offer offer) {
+    public void pushOfferCallback(Notification notification) {
         ObjectMapper objectMapper = new ObjectMapper();
-        System.out.println("Trying to send:" + offer.toString());
+        System.out.println("Trying to send:" + notification.toString());
         if (session != null && session.isOpen()) {
             try {
-                System.out.println("Now sending:" + objectMapper.writeValueAsString(offer));
-                session.sendMessage(new TextMessage("{\"value\": " + objectMapper.writeValueAsString(offer) + "}"));
+                System.out.println("Now sending:" + objectMapper.writeValueAsString(notification));
+                session.sendMessage(new TextMessage("{\"value\": " + objectMapper.writeValueAsString(notification) + "}"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             try {
-                System.out.println("Don't have open session to send:" + objectMapper.writeValueAsString(offer));
+                System.out.println("Don't have open session to send:" + objectMapper.writeValueAsString(notification));
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }

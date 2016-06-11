@@ -1,6 +1,10 @@
 package hello.rulesProcessor.models;
 
-import hello.rulesProcessor.contracts.MasterStrategy;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import hello.models.Notification;
 import hello.rulesProcessor.contracts.TransactionStrategy;
 import hello.rulesProcessor.enums.Operator;
 
@@ -9,18 +13,51 @@ import java.util.List;
 /**
  * Created by Krishna on 6/11/2016.
  */
-public class TransactionalMasterStrategy implements MasterStrategy {
+public class TransactionalMasterStrategy {
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+            include = JsonTypeInfo.As.PROPERTY,
+            property = "type")
+    @JsonSubTypes({
+            @JsonSubTypes.Type(value = TransactionTimeRule.class, name = "time"),
+            @JsonSubTypes.Type(value = TransactionAmountRule.class, name = "amount"),
+            @JsonSubTypes.Type(value = TransactionTypeRule.class, name = "type")
+    })
     private List<TransactionStrategy> rules;
     private List<Operator> operators;
-    private String offer;
+    private Notification notification;
+    private int id;
 
-    public TransactionalMasterStrategy(List<TransactionStrategy> rules, List<Operator> operators, String offer) {
+    public TransactionalMasterStrategy(int id, List<TransactionStrategy> rules, List<Operator> operators, Notification notification) {
+        this.id = id;
         this.rules = rules;
         this.operators = operators;
-        this.offer = offer;
+        this.notification = notification;
     }
 
-    @Override
+    public TransactionalMasterStrategy(){
+
+    }
+
+    public List<TransactionStrategy> getRules() {
+        return rules;
+    }
+
+    public void setRules(List<TransactionStrategy> rules) {
+        this.rules = rules;
+    }
+
+    public List<Operator> getOperators() {
+        return operators;
+    }
+
+    public void setOperators(List<Operator> operators) {
+        this.operators = operators;
+    }
+
+    public void setOffer(Notification notification) {
+        this.notification = notification;
+    }
+
     public boolean executeRules(Transaction currentTransaction) {
         if(operators.size() == 0){
             return rules.get(0).execute(currentTransaction);
@@ -38,8 +75,16 @@ public class TransactionalMasterStrategy implements MasterStrategy {
         }
     }
 
-    @Override
-    public String getOffer() {
-        return offer;
+    public Notification getNotification() {
+        return notification;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 }

@@ -1,9 +1,7 @@
 package hello.rulesProcessor.models;
 
+import hello.models.Notification;
 import org.springframework.stereotype.Component;
-import hello.rulesProcessor.contracts.MasterStrategy;
-import hello.rulesProcessor.contracts.TransactionStrategy;
-import hello.rulesProcessor.enums.Operator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,31 +11,44 @@ import java.util.List;
  */
 @Component
 public class RulesAdapter {
-    private List<MasterStrategy> strategies;
+    private static List<TransactionalMasterStrategy> strategies;
+    private static int counter = 1;
 
     public RulesAdapter(){
-        //file reading goes here
-        List<Operator> operators = new ArrayList<>();
-        operators.add(Operator.AND);
-        List<TransactionStrategy> rules = new ArrayList<>();
-        rules.add(new TransactionAmountRule(1000, 4000));
-        rules.add(new TransactionTypeRule("bar"));
-        MasterStrategy strtg1 = new TransactionalMasterStrategy(rules, operators, "uber cab");
         strategies = new ArrayList<>();
-        strategies.add(strtg1);
     }
 
-    public void refreshStrategies(){
-        //file re read and get new strategies
-    }
-
-    public List<String> getOffers(Transaction transaction){
-        List<String> offers = new ArrayList<>();
-        for (MasterStrategy strategy: strategies) {
+    public List<Notification> getNotifications(Transaction transaction){
+        List<Notification> notifications = new ArrayList<>();
+        for (TransactionalMasterStrategy strategy: strategies) {
             if(strategy.executeRules(transaction)){
-                offers.add(strategy.getOffer());
+                notifications.add(strategy.getNotification());
             }
         }
-        return offers;
+        return notifications;
+    }
+    
+    public void deleteRule(int id){
+        for (TransactionalMasterStrategy masterStrategy: strategies) {
+            if(masterStrategy.getId() == id){
+                strategies.remove(masterStrategy);
+            }
+        }
+    }
+
+    public void addRule(TransactionalMasterStrategy masterStrategy){
+        masterStrategy.setId(counter++);
+        strategies.add(masterStrategy);
+    }
+
+    public void updateRule(TransactionalMasterStrategy masterStrategy){
+        deleteRule(masterStrategy.getId());
+        strategies.add(masterStrategy);
+    }
+
+    public List<TransactionalMasterStrategy> getAll(){
+        List<TransactionalMasterStrategy> tempList = new ArrayList<>();
+        tempList.addAll(strategies);
+        return tempList;
     }
 }

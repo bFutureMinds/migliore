@@ -1,5 +1,6 @@
 package hello.rulesProcessor.models;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import hello.rulesProcessor.contracts.TransactionStrategy;
 
 import java.sql.Time;
@@ -7,8 +8,8 @@ import java.sql.Time;
 /**
  * Created by Krishna on 6/11/2016.
  */
+@JsonTypeName("time")
 public class TransactionTimeRule implements TransactionStrategy {
-
     private Time toTime;
     private Time fromTime;
 

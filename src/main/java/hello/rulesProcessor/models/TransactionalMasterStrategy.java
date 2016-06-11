@@ -51,7 +51,7 @@ public class TransactionalMasterStrategy {
     }
 
     public boolean executeRules(Transaction currentTransaction) {
-        if(operators.size() == 0){
+        if((operators == null) || (operators.size() == 0)){
             return rules.get(0).execute(currentTransaction);
         } else {
             boolean result = rules.get(0).execute(currentTransaction);

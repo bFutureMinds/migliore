@@ -14,10 +14,13 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Autowired
     CounterHandler counterHandler;
+    @Autowired
+    OfferHandler offerHandler;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(counterHandler, "/counter");
+        registry.addHandler(offerHandler, "/offers");
     }
 
 }

@@ -10,6 +10,17 @@ import hello.rulesProcessor.contracts.TransactionStrategy;
 public class TransactionTypeRule implements TransactionStrategy {
     private String types;
 
+    public TransactionTypeRule() {
+    }
+
+    public String getTypes() {
+        return types;
+    }
+
+    public void setTypes(String types) {
+        this.types = types;
+    }
+
     public TransactionTypeRule(String types) {
         this.types = types;
     }

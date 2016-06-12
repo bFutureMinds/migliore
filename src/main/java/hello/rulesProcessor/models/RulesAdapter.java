@@ -12,6 +12,7 @@ import java.util.List;
  */
 @Component
 public class RulesAdapter {
+
     private static List<TransactionalMasterStrategy> strategies;
     private static int counter = 1;
 

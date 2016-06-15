@@ -1,6 +1,7 @@
 package hello.rulesProcessor.models;
 
 import hello.models.Notification;
+import hello.rulesProcessor.factory.RulesFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class RulesAdapter {
 
     public RulesAdapter(){
         strategies = new ArrayList<>();
+        strategies.addAll(RulesFactory.getStrategies());
     }
 
     public List<Notification> getNotifications(Transaction transaction){

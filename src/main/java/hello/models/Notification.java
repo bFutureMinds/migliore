@@ -31,7 +31,7 @@ public class Notification {
         return description;
     }
 
-    public void setDescription(String discription) {
-        this.description = discription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

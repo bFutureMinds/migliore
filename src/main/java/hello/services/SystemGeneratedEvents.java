@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -22,6 +25,8 @@ public class SystemGeneratedEvents {
     static boolean isAnniversaryEventSent;
     private Date birthDate=new Date(2016,05,15);
     private Date anniversaryDate=new Date(2016,05,17);
+    private final List<String> moments = Arrays.asList(new String[] { "air_travel",
+            "road_travel", "train_travel", "bought_car", "" });
 
     @Scheduled(fixedDelay = 1000)
     public void sendBirthDayEvent(){

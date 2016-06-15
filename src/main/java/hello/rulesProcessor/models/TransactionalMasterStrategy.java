@@ -14,14 +14,6 @@ import java.util.List;
  * Created by Krishna on 6/11/2016.
  */
 public class TransactionalMasterStrategy {
-    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
-            include = JsonTypeInfo.As.PROPERTY,
-            property = "type")
-    @JsonSubTypes({
-            @JsonSubTypes.Type(value = TransactionTimeRule.class, name = "time"),
-            @JsonSubTypes.Type(value = TransactionAmountRule.class, name = "amount"),
-            @JsonSubTypes.Type(value = TransactionTypeRule.class, name = "type")
-    })
     private List<TransactionStrategy> rules;
     private List<Operator> operators;
     private Notification notification;

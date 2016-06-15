@@ -9,11 +9,14 @@ public class Notification {
 
     private NotificationType type;
 
-    private String discription;
+    private String description;
 
-    public Notification(NotificationType type, String discription) {
+    public Notification(NotificationType type, String description) {
         this.type = type;
-        this.discription = discription;
+        this.description = description;
+    }
+
+    public Notification() {
     }
 
     public NotificationType getType() {
@@ -24,11 +27,11 @@ public class Notification {
         this.type = type;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public void setDescription(String discription) {
+        this.description = discription;
     }
 }

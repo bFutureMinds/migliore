@@ -20,4 +20,23 @@ public class TransactionAmountRule implements TransactionStrategy {
     public boolean execute(Transaction transaction) {
         return ((transaction.getAmount() >= minimumAmount) && (transaction.getAmount() <= maximumAmount));
     }
+
+    public TransactionAmountRule() {
+    }
+
+    public double getMinimumAmount() {
+        return minimumAmount;
+    }
+
+    public void setMinimumAmount(double minimumAmount) {
+        this.minimumAmount = minimumAmount;
+    }
+
+    public double getMaximumAmount() {
+        return maximumAmount;
+    }
+
+    public void setMaximumAmount(double maximumAmount) {
+        this.maximumAmount = maximumAmount;
+    }
 }

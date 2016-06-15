@@ -24,7 +24,7 @@
         @Override
         public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
             registry.addHandler(counterHandler, "/counter").setAllowedOrigins("*");
-            registry.addHandler(offerHandler, "/offers").setAllowedOrigins("*");
+            registry.addHandler(offerHandler, "/notifications").setAllowedOrigins("*");
         }
 
     }
